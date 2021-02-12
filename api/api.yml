@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Project Management Service
+components:
+  schemas:
+    NewProject:
+      type: object
+      required:
+        - name
+        - owner
+        - state
+        - progress
+      properties:
+        name:
+          type: string
+        owner:
+          type: string
+        state:
+          type: string
+          enum: [ planned, active, done, failed ]
+          default: active
+        progress:
+          type: number
+
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/NewProject'
+        - type: object
+          required:
+            - "id"
+          properties:
+            id:
+              type: integer
+
+
+paths:
+  /projects:
+    post:
+      summary: Create new Project
+      operationId: createProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProject'
+      responses:
+        '201':
+          description: Project is created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+        '400':
+          description: Bad request
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict in insertion
+        '500':
+          description: Internal server error
+
+    get:
+      summary: Get all projects
+      operationId: getProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  '/projects/{id}':
+    put:
+      summary: Update project
+      operationId: updateProject
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProject'
+      responses:
+        '204':
+          description: Project is updated
+        '400':
+          description: Bad request
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+        '500':
+          description: Internal server error

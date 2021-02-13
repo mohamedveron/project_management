@@ -13,7 +13,7 @@ func (s *Service) UpdateProject(project domains.Project, id string) (string, err
 		return "not exist", errors.New("project not exist")
 	}
 
-	updatedProjects := domains.Project{
+	updatedProject := domains.Project{
 		ID:           proj.ID,
 		Name:         project.Name,
 		Owner:        proj.Owner,
@@ -22,7 +22,7 @@ func (s *Service) UpdateProject(project domains.Project, id string) (string, err
 		Participants: proj.Participants,
 	}
 
-    s.ProjectsDB[id] = updatedProjects
+    s.ProjectsDB[id] = updatedProject
 
 	return "updated", nil
 }

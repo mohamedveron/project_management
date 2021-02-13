@@ -46,11 +46,27 @@ type CreateProjectJSONBody NewProject
 // UpdateProjectJSONBody defines parameters for UpdateProject.
 type UpdateProjectJSONBody NewProject
 
+// AssignProjectOwnerJSONBody defines parameters for AssignProjectOwner.
+type AssignProjectOwnerJSONBody struct {
+	EmployeeId *string `json:"employeeId,omitempty"`
+}
+
+// AssignProjectParticipantsJSONBody defines parameters for AssignProjectParticipants.
+type AssignProjectParticipantsJSONBody struct {
+	EmployeeIds *[]string `json:"employeeIds,omitempty"`
+}
+
 // CreateProjectJSONRequestBody defines body for CreateProject for application/json ContentType.
 type CreateProjectJSONRequestBody CreateProjectJSONBody
 
 // UpdateProjectJSONRequestBody defines body for UpdateProject for application/json ContentType.
 type UpdateProjectJSONRequestBody UpdateProjectJSONBody
+
+// AssignProjectOwnerJSONRequestBody defines body for AssignProjectOwner for application/json ContentType.
+type AssignProjectOwnerJSONRequestBody AssignProjectOwnerJSONBody
+
+// AssignProjectParticipantsJSONRequestBody defines body for AssignProjectParticipants for application/json ContentType.
+type AssignProjectParticipantsJSONRequestBody AssignProjectParticipantsJSONBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -63,6 +79,12 @@ type ServerInterface interface {
 	// Update project
 	// (PUT /projects/{id})
 	UpdateProject(w http.ResponseWriter, r *http.Request, id string)
+	// Assign owner to project
+	// (POST /projects/{id}/assign/owner)
+	AssignProjectOwner(w http.ResponseWriter, r *http.Request, id string)
+	// Assign participants to project
+	// (POST /projects/{id}/assign/participants)
+	AssignProjectParticipants(w http.ResponseWriter, r *http.Request, id string)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -129,6 +151,58 @@ func (siw *ServerInterfaceWrapper) UpdateProject(w http.ResponseWriter, r *http.
 	handler(w, r.WithContext(ctx))
 }
 
+// AssignProjectOwner operation middleware
+func (siw *ServerInterfaceWrapper) AssignProjectOwner(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "id" -------------
+	var id string
+
+	err = runtime.BindStyledParameter("simple", false, "id", chi.URLParam(r, "id"), &id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Invalid format for parameter id: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	var handler = func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AssignProjectOwner(w, r, id)
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler(w, r.WithContext(ctx))
+}
+
+// AssignProjectParticipants operation middleware
+func (siw *ServerInterfaceWrapper) AssignProjectParticipants(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "id" -------------
+	var id string
+
+	err = runtime.BindStyledParameter("simple", false, "id", chi.URLParam(r, "id"), &id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Invalid format for parameter id: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	var handler = func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AssignProjectParticipants(w, r, id)
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler(w, r.WithContext(ctx))
+}
+
 // Handler creates http.Handler with routing matching OpenAPI spec.
 func Handler(si ServerInterface) http.Handler {
 	return HandlerWithOptions(si, ChiServerOptions{})
@@ -174,6 +248,12 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Put(options.BaseURL+"/projects/{id}", wrapper.UpdateProject)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/projects/{id}/assign/owner", wrapper.AssignProjectOwner)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/projects/{id}/assign/participants", wrapper.AssignProjectParticipants)
 	})
 
 	return r

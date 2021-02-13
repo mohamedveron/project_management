@@ -154,7 +154,7 @@ paths:
             schema:
               type: object
               properties:
-                empoloyeeId:
+                employeeId:
                   type: string
       responses:
         '200':
@@ -184,7 +184,7 @@ paths:
             schema:
               type: object
               properties:
-                empoloyeeIds:
+                employeeIds:
                   type: array
                   items:
                     type: string

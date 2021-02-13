@@ -10,3 +10,12 @@ func (s *Service) findProjectById(id string) *domains.Project{
 
 	return nil
 }
+
+func (s *Service) findEmployeeById(id string) *domains.Employee{
+
+	if employee, ok := s.EmployeesDB[id]; ok {
+		return &employee
+	}
+
+	return nil
+}

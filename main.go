@@ -13,21 +13,30 @@ import (
 func main() {
 	
 	employee1 := domains.Employee{
-		ID:         "11",
+		ID:         "11aa",
 		FirstName:  "Peter",
 		LastName:   "Golm",
-		Role:       "senior developer",
+		Role:       "manager",
 		Email:      "peter_golm@visable.com",
-		Department: "engineering",
+		Department: "Engineering",
 	}
 
 	employee2 := domains.Employee{
-		ID:         "33",
+		ID:         "33cc",
 		FirstName:  "Andreas",
 		LastName:   "Litt",
 		Role:       "developer",
 		Email:      "Andreas_Litt@visable.com",
-		Department: "engineering",
+		Department: "Engineering",
+	}
+
+	employee3 := domains.Employee{
+		ID:         "58kk",
+		FirstName:  "Nina",
+		LastName:   "Wessels",
+		Role:       "hr",
+		Email:      "Nina_Wessels@visable.com",
+		Department: "HR",
 	}
 
 	project1 := domains.Project{
@@ -39,11 +48,15 @@ func main() {
 		Participants: []domains.Employee{employee2},
 	}
 
-	 projectsDB := make(map[string]domains.Project)
+	projectsDB := make(map[string]domains.Project)
+	employeesDB := make(map[string]domains.Employee)
 
+	employeesDB["11aa"] = employee1
+	employeesDB["33cc"] = employee2
+	employeesDB["58kk"] = employee3
 	projectsDB["11bb"] = project1
 
-	serviceLayer := service.NewService(projectsDB)
+	serviceLayer := service.NewService(projectsDB, employeesDB)
 	server := api.NewServer(serviceLayer)
 
 	// prepare router

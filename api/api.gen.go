@@ -11,10 +11,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// Employee defines model for Employee.
+type Employee struct {
+	Department string `json:"department"`
+	Email      string `json:"email"`
+	FirstName  string `json:"firstName"`
+	Id         string `json:"id"`
+	LastName   string `json:"lastName"`
+	Role       string `json:"role"`
+}
+
 // NewProject defines model for NewProject.
 type NewProject struct {
 	Name     string  `json:"name"`
-	OwnerId  *string `json:"ownerId,omitempty"`
 	Progress float32 `json:"progress"`
 	State    string  `json:"state"`
 }
@@ -24,7 +33,11 @@ type Project struct {
 	// Embedded struct due to allOf(#/components/schemas/NewProject)
 	NewProject `yaml:",inline"`
 	// Embedded fields due to inline allOf schema
-	Id string `json:"id"`
+	Id    string    `json:"id"`
+	Owner *Employee `json:"owner,omitempty"`
+
+	// paticipants in the project
+	Paticipants *[]Employee `json:"paticipants,omitempty"`
 }
 
 // CreateProjectJSONBody defines parameters for CreateProject.

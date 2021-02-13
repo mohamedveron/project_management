@@ -13,12 +13,10 @@ components:
       properties:
         name:
           type: string
-        ownerId:
-          type: string
         state:
           type: string
           enum: [ planned, active, done, failed ]
-          default: active
+          default: planned
         progress:
           type: number
 
@@ -31,6 +29,36 @@ components:
           properties:
             id:
               type: string
+            owner:
+              $ref: '#/components/schemas/Employee'
+            paticipants:
+              type: array
+              items:
+                $ref: '#/components/schemas/Employee'
+              description: paticipants in the project
+
+    Employee:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - role
+        - email
+        - department
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+        department:
+          type: string
 
 
 paths:

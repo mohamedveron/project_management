@@ -16,20 +16,18 @@ func main() {
 
 	// prepare router
 	r := chi.NewRouter()
-	r.Route("/api/v1", func(r chi.Router) {
+	r.Route("/", func(r chi.Router) {
 		r.Mount("/", api.Handler(server))
 	})
 
 	srv := &http.Server{
 		Handler: r,
-		Addr:    "80",
+		Addr:    ":8080",
 	}
 
-	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fmt.Println("server failed to start", "error", err)
 		}
-	}()
 
 	fmt.Println("server started...")
 
@@ -45,7 +43,6 @@ func main() {
 	mm["shy5o"] = []string{"cc", "dd"}
 
 	delete(mm, "shy5o")
-	defer fmt.Println("done")
 
 
 }

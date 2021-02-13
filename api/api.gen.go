@@ -24,7 +24,7 @@ type Project struct {
 	// Embedded struct due to allOf(#/components/schemas/NewProject)
 	NewProject `yaml:",inline"`
 	// Embedded fields due to inline allOf schema
-	Id int `json:"id"`
+	Id string `json:"id"`
 }
 
 // CreateProjectJSONBody defines parameters for CreateProject.

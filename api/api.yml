@@ -31,7 +31,7 @@ components:
             - "id"
           properties:
             id:
-              type: integer
+              type: string
 
 
 paths:
@@ -55,7 +55,6 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: uuid
         '400':
           description: Bad request
         '404':

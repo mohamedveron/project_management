@@ -4,12 +4,44 @@ import (
 	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/mohamedveron/project_management/api"
+	"github.com/mohamedveron/project_management/domains"
 	"github.com/mohamedveron/project_management/service"
 	"net/http"
 )
 
 
 func main() {
+	
+	employee1 := domains.Employee{
+		ID:         "11",
+		FirstName:  "Peter",
+		LastName:   "Golm",
+		Role:       "senior developer",
+		Email:      "peter_golm@visable.com",
+		Department: "engineering",
+	}
+
+	employee2 := domains.Employee{
+		ID:         "33",
+		FirstName:  "Andreas",
+		LastName:   "Litt",
+		Role:       "developer",
+		Email:      "Andreas_Litt@visable.com",
+		Department: "engineering",
+	}
+
+	project1 := domains.Project{
+		ID:           "1",
+		Name:         "project management",
+		Owner:        employee1,
+		Progress:     0,
+		State:        "",
+		Participants: []domains.Employee{employee2},
+	}
+
+	 projectsDB := make(map[string]domains.Project)
+
+	projectsDB["1"] = project1
 
 	serviceLayer := service.NewService()
 	server := api.NewServer(serviceLayer)

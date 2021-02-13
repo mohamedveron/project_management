@@ -11,7 +11,8 @@ import (
 
 
 func main() {
-	
+
+	// make a list of employees to do the operation instead of db
 	employee1 := domains.Employee{
 		ID:         "11aa",
 		FirstName:  "Peter",
@@ -39,6 +40,7 @@ func main() {
 		Department: "HR",
 	}
 
+	// make a list of projects to do the operation instead of db
 	project1 := domains.Project{
 		ID:           "11bb",
 		Name:         "project management",
@@ -74,7 +76,7 @@ func main() {
 		fmt.Println("server failed to start", "error", err)
 	}
 
-	fmt.Println("server started...")
+	fmt.Println("server starting...")
 
 
 	arr := []int{42,43,44,45,46}

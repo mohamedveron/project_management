@@ -14,7 +14,7 @@ import (
 // NewProject defines model for NewProject.
 type NewProject struct {
 	Name     string  `json:"name"`
-	Owner    string  `json:"owner"`
+	OwnerId  *string `json:"ownerId,omitempty"`
 	Progress float32 `json:"progress"`
 	State    string  `json:"state"`
 }

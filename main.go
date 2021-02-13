@@ -57,9 +57,9 @@ func main() {
 		Addr:    ":8080",
 	}
 
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Println("server failed to start", "error", err)
-		}
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		fmt.Println("server failed to start", "error", err)
+	}
 
 	fmt.Println("server started...")
 

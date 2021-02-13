@@ -31,7 +31,7 @@ func main() {
 	}
 
 	project1 := domains.Project{
-		ID:           "1",
+		ID:           "11bb",
 		Name:         "project management",
 		Owner:        employee1,
 		Progress:     0,
@@ -41,7 +41,7 @@ func main() {
 
 	 projectsDB := make(map[string]domains.Project)
 
-	projectsDB["1"] = project1
+	projectsDB["11bb"] = project1
 
 	serviceLayer := service.NewService(projectsDB)
 	server := api.NewServer(serviceLayer)

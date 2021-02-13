@@ -8,7 +8,7 @@ import (
 func (s *Service) CreateProject(project domains.Project) (string, error){
 
 	// generate new id
-	id := RandGeneratePassword(2)
+	id := randGeneratePassword(2)
 
 	project.ID = id
 
@@ -19,7 +19,7 @@ func (s *Service) CreateProject(project domains.Project) (string, error){
 
 
 
-func RandGeneratePassword(n int) string {
+func randGeneratePassword(n int) string {
 
 	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	b := make([]byte, n)

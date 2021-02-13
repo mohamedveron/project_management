@@ -35,7 +35,7 @@ func main() {
 		Name:         "project management",
 		Owner:        employee1,
 		Progress:     0,
-		State:        "",
+		State:        domains.EnumProjectStatePlanned,
 		Participants: []domains.Employee{employee2},
 	}
 
@@ -43,7 +43,7 @@ func main() {
 
 	projectsDB["1"] = project1
 
-	serviceLayer := service.NewService()
+	serviceLayer := service.NewService(projectsDB)
 	server := api.NewServer(serviceLayer)
 
 	// prepare router

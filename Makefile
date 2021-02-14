@@ -16,12 +16,16 @@ test: generate
 	@echo :: run tests
 	go test -race
 
+run: generate
+	@echo :: start the http server
+	go run main.go
+
 build:  $(OUTPUT)
 	CGO_ENABLED=0 GOOS=linux go build -o bin/app \
 		-ldflags "-X main.version=$(VERSION)" \
 		-gcflags "-trimpath $(GOPATH)/src"
 
-all: generate test build
+all: generate test build run
 
 
 $(OUTPUT):

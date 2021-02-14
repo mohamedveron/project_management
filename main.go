@@ -89,18 +89,4 @@ func main() {
 
 	fmt.Println("server starting...")
 
-
-	arr := []int{42,43,44,45,46}
-	arr1 := []int{47,48,49,50, 51}
-
-	arr2 := arr[2:5]
-	arr2 = append(arr2, arr1[0:2]...)
-
-	mm := make(map[string][]string)
-	mm["veron"] = []string{"aa", "bb"}
-	mm["shy5o"] = []string{"cc", "dd"}
-
-	delete(mm, "shy5o")
-
-
 }

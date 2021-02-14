@@ -8,7 +8,7 @@ import (
 func (s *Service) CreateProject(project domains.Project) (string, error){
 
 	// generate new id
-	id := randGeneratePassword(2)
+	id := randGeneratePassword(4)
 
 	project.ID = id
 

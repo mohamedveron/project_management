@@ -70,6 +70,9 @@ type AssignProjectParticipantsJSONRequestBody AssignProjectParticipantsJSONBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Get all employees
+	// (GET /employees)
+	GetEmployees(w http.ResponseWriter, r *http.Request)
 	// Get all projects
 	// (GET /projects)
 	GetProjects(w http.ResponseWriter, r *http.Request)
@@ -94,6 +97,21 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
+
+// GetEmployees operation middleware
+func (siw *ServerInterfaceWrapper) GetEmployees(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var handler = func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetEmployees(w, r)
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler(w, r.WithContext(ctx))
+}
 
 // GetProjects operation middleware
 func (siw *ServerInterfaceWrapper) GetProjects(w http.ResponseWriter, r *http.Request) {
@@ -240,6 +258,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		HandlerMiddlewares: options.Middlewares,
 	}
 
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/employees", wrapper.GetEmployees)
+	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/projects", wrapper.GetProjects)
 	})

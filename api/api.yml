@@ -197,3 +197,24 @@ paths:
           description: Not Found
         '500':
           description: Internal server error
+
+  /employees:
+    get:
+      summary: Get all employees
+      operationId: getEmployees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error

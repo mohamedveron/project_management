@@ -53,10 +53,10 @@ func main() {
 	project1 := domains.Project{
 		ID:           "11bb",
 		Name:         "project management",
-		Owner:        employee1,
+		Owner:        domains.Employee{},
 		Progress:     0,
 		State:        domains.EnumProjectStatePlanned,
-		Participants: []domains.Employee{employee2},
+		Participants: []domains.Employee{},
 	}
 
 	projectsDB := make(map[string]domains.Project)

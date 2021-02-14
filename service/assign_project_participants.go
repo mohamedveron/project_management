@@ -15,6 +15,10 @@ func (s *Service) AssignProjectParticipants(projectId string, participantsIds []
 
 	participants := []domains.Employee{}
 
+	if project.Participants != nil && len(project.Participants) > 0 {
+		participants = project.Participants
+	}
+
 	for _, id := range participantsIds {
 
 		owner := s.findEmployeeById(id)

@@ -19,6 +19,10 @@ func (s *Service) AssignProjectOwner(projectId string, ownerId string)(string , 
 		return "not exist", errors.New("employee not exist")
 	}
 
+	if owner.Role != "manager" {
+		return "not manager", errors.New("employee not manager to be the project owner")
+	}
+
 	updatedProject := domains.Project{
 		ID:           project.ID,
 		Name:         project.Name,

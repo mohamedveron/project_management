@@ -1,8 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Project Management Service
-  owner: Mohamed Abdel Mohaimen -> mohamedveron23@gmail.com
+  title: Project Management Service by Mohamed Abdel Mohaimen -> mohamedveron23@gmail.com
 components:
   schemas:
     NewProject:

@@ -25,7 +25,7 @@ build:  $(OUTPUT)
 		-ldflags "-X main.version=$(VERSION)" \
 		-gcflags "-trimpath $(GOPATH)/src"
 
-all: generate tests build run
+all: generate build tests run
 
 
 $(OUTPUT):

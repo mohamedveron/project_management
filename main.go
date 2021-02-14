@@ -40,6 +40,15 @@ func main() {
 		Department: "HR",
 	}
 
+	employee4 := domains.Employee{
+		ID:         "t3t3",
+		FirstName:  "Mohamed",
+		LastName:   "Abdel Mohaimen",
+		Role:       "developer",
+		Email:      "Mohamed_veron@gmail.com",
+		Department: "Engineering",
+	}
+
 	// make a list of projects to do the operation instead of db
 	project1 := domains.Project{
 		ID:           "11bb",
@@ -56,6 +65,8 @@ func main() {
 	employeesDB["11aa"] = employee1
 	employeesDB["33cc"] = employee2
 	employeesDB["58kk"] = employee3
+	employeesDB["t3t3"] = employee4
+
 	projectsDB["11bb"] = project1
 
 	serviceLayer := service.NewService(projectsDB, employeesDB)

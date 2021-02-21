@@ -1,4 +1,4 @@
-# project_management
+# visable task
 This app is developed using go-chi https://github.com/go-chi/chi router and oapi-codegen https://github.com/deepmap/oapi-codegen to generate client for apis
 
 # Use api.yml file in the swagger ui to see the description of the rest apis
